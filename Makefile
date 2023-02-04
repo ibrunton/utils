@@ -4,7 +4,7 @@
 
 CC = gcc
 
-APPS = c2f f2c inc kg2lb lb2kg odo roundtime watermark
+APPS = c2f f2c gas inc kg2lb lb2kg odo roundtime watermark
 CFLAGS = -I.
 LDFLAGS =
 
@@ -17,6 +17,8 @@ c2f:
 f2c:
 	$(CC) -o f2c f2c.c $(CFLAGS)
 
+gas:
+	$(CC) -o gas gas.c $(CFLAGS)
 inc: 
 	$(CC) -o inc inc.c $(CFLAGS)
 
@@ -34,6 +36,9 @@ roundtime:
 
 watermark:
 	$(CC) -o watermark watermark.c $(CFLAGS)
+
+install: all
+	install -D -m 755 -o root -g root $(APPNAME) $(DESTDIR)$(PREFIX)/$(APPNAME)
 
 clean:
 	rm -rf *.o

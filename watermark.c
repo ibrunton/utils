@@ -17,6 +17,9 @@
 #include <time.h>
 #include <errno.h>
 
+#define APPNAME "watermark"
+#define VERSION 2.0
+
 void print_version ();
 
 int
@@ -89,12 +92,15 @@ main (int argc, char *argv[])
 	}
 
 	if (echo == 1) {
+		/*
 		if (litres > 1 || litres == 0)
 			l_str = "litres";
 		else
 			l_str = "litre";
 
 		printf ("You have drunk %.2f %s of water today.\n", litres, l_str);
+		*/
+		printf ("%.2f\n", litres);
 	}
 
 	free (wm_file);
