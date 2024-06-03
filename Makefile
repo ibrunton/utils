@@ -4,7 +4,7 @@
 
 CC = gcc
 
-APPS = c2f f2c gas inc kg2lb lb2kg odo roundtime watermark
+APPS = c2f f2c gas inc kg2lb lb2kg messages odo roundtime watermark
 CFLAGS = -I.
 LDFLAGS =
 
@@ -16,7 +16,6 @@ c2f:
 
 f2c:
 	$(CC) -o f2c f2c.c $(CFLAGS)
-
 gas:
 	$(CC) -o gas gas.c $(CFLAGS)
 inc: 
@@ -27,6 +26,9 @@ kg2lb:
 
 lb2kg:
 	$(CC) -o lb2kg lb2kg.c $(CFLAGS)
+
+messages:
+	$(CC) -o messages messages.c $(CFLAGS)
 
 odo:
 	$(CC) -o odo odo.c $(CFLAGS)
