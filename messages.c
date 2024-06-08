@@ -1,10 +1,10 @@
 /*
  *        Project:  utils
- *       Filename:  message_v2.c
+ *       Filename:  messages.c
  *
  *    Description:  
  *
- *        Version:  0.1a
+ *        Version:  1.0
  *        Created:  2024-06-03 13:02
  *       Compiler:  gcc
  *
@@ -71,8 +71,11 @@ int main (int argc, char *argv[]) {
 		}
 		else {
 			/* Add all input to end of file, with newline */
-			for (i = 1; i < argc; i++) {
-				...
+			if ((fp = fopen (file, "a")) == NULL) {
+			}
+			else {
+				fprintf (fp, "%s\n", argv[1]);
+				fclose (fp);
 			}
 		}
 	}
