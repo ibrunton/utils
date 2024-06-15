@@ -4,8 +4,9 @@
  *
  *    Description:  
  *
- *        Version:  1.0
+ *        Version:  1.1
  *        Created:  2024-06-03 13:02
+ *        			2024-06-14 14:44
  *       Compiler:  gcc
  *
  *         Author:  Ian D. Brunton (idb), iandbrunton at gmail .com
@@ -55,11 +56,25 @@ int main (int argc, char *argv[]) {
 
 	if (argc > 1) {
 		if (strncmp (argv[1], "clear\0", 6) == 0) {
-			printf ("%s\n", "Clear!");
 			/* Remove last line and write file */
 			if ((fp = fopen (file, "w")) == NULL) {
 			}
 			else {
+				i = 0;
+				while (i < lineCount-1) {
+					fprintf (fp, lines[i].text);
+					++i;
+				}
+
+				fclose (fp);
+			}
+		}
+		else if (strncmp (argv[1], "cycle\0", 6) == 0) {
+			/* Move last line to first line and write file */
+			if ((fp = fopen (file, "w")) == NULL) {
+			}
+			else {
+				fprintf (fp,lines[lineCount-1].text);
 				i = 0;
 				while (i < lineCount-1) {
 					fprintf (fp, lines[i].text);
