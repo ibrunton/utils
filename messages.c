@@ -2,7 +2,10 @@
  *        Project:  utils
  *       Filename:  messages.c
  *
- *    Description:  
+ *    Description:  stores short messages for display in lemonbar.
+ *    				Last in, first out.
+ *    				Sending "clear" deletes the last message.
+ *    				Sending "cycle" moves the last line to the first.
  *
  *        Version:  1.1
  *        Created:  2024-06-03 13:02
