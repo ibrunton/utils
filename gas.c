@@ -44,6 +44,7 @@ main (int argc, char *argv[])
 	FILE *fp;
 
 	char *file = "/home/ian/Dropbox/docs/gas";
+	char *lastpricefile = "/home/ian/Dropbox/docs/lastgasprice";
 
 	if (argc < 2) {
 		print_usage ();
@@ -96,6 +97,15 @@ main (int argc, char *argv[])
 	}
 	else {
 		fprintf (fp, "%s\t%d\t%.3f\t@ %.3f\t\t$ %.2f\t%d\t%d\n", date, kms, litres, rate, payment, points, dte);
+	}
+	fclose (fp);
+
+	if ((fp = fopen (lastpricefile, "w")) == 0) {
+		perror ("Error opening file");
+		return EXIT_FAILURE;
+	}
+	else {
+		fprintf (fp, "%.3f", rate);
 	}
 	fclose (fp);
 
