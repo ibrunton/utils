@@ -4,13 +4,15 @@
 
 CC = gcc
 
-APPS = c2f f2c gas inc kg2lb lb2kg messages odo roundtime sr watermark
+APPS = bvgas c2f f2c gas inc kg2lb lb2kg messages odo roundtime sr watermark
 CFLAGS = -I.
 LDFLAGS =
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) $(LDFLAGS)
 
+bvgas:
+	$(CC) -o bvgas bvgas.c $(CFLAGS)
 c2f: 
 	$(CC) -o c2f c2f.c $(CFLAGS)
 
