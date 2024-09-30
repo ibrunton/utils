@@ -72,7 +72,7 @@ int main (int argc, char *argv[]) {
 	total = price_in + price_out;
 
 	sprintf (system_call,
-			"llg -Tt Gas: 85km @ %.1f = $%.2f + 80km @ %.1f = $%.2f = $%.2f",
+			"llg -Tt Gas: 85km @ %.1f = %.2f + 80km @ %.1f = %.2f = %.2f",
 			lkm_in, price_in, lkm_out, price_out, total);
 	system (system_call);
 
