@@ -16,6 +16,7 @@
 #include <stdlib.h>
 
 #define MAX 10
+#define DEFICIT 5
 
 int main (int argc, char *argv[]) {
 	char system_call[32];
@@ -41,5 +42,11 @@ int main (int argc, char *argv[]) {
 	sprintf (system_call, "llg -t Sleep: %d\n", rating);
 
 	system (system_call);
+
+	if (rating < DEFICIT) {
+		sprintf (system_call, "log-tag sleep-deficit\n");
+		system (system_call);
+	}
+
 	return EXIT_SUCCESS;
 }
