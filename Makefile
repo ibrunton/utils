@@ -35,6 +35,9 @@ messages:
 odo:
 	$(CC) -o odo odo.c $(CFLAGS)
 
+oneoff:
+	$(CC) -o oneoff oneoff.c $(CFLAGS)
+
 roundtime:
 	$(CC) -o roundtime roundtime.c $(CFLAGS)
 
