@@ -4,7 +4,7 @@
  *
  *    Description:  returns one-off to-do item when the date matches today
  *
- *        Version:  0.1a
+ *        Version:  1.0
  *        Created:  2024-10-19 07:22
  *       Compiler:  gcc
  *
@@ -27,7 +27,7 @@ int main (int argc, char *argv[]) {
 	char file[] = "/home/ian/.local/share/oneoffs";
 	char *itemBuffer = NULL;
 	char date[11];
-	char system_call[56];
+	char system_call[64];
 	char text[32];
 	char today[11];
 	int itemCount = 0;
@@ -37,41 +37,53 @@ int main (int argc, char *argv[]) {
 	time_t time_raw;
 	todoItem *items;
 
-	if ((fp = fopen (file, "r")) == NULL) {
-	}
-	else {
-		itemSize = getline (&itemBuffer, &itemBufferSize, fp);
-
-		items = (todoItem*) malloc (43);
-
-		while (itemSize >= 0) {
-			itemCount++;
-
-			items = (todoItem*) realloc (items, itemCount*43);
-
-			sscanf (itemBuffer, "%10s:%32[^\n]", &date, &text);
-			strncpy (items[itemCount-1].date, date, 11);
-			strncpy (items[itemCount-1].text, text, 32);
-
+	if (argc == 1) {
+		if ((fp = fopen (file, "r")) == NULL) {
+		}
+		else {
 			itemSize = getline (&itemBuffer, &itemBufferSize, fp);
+
+			items = (todoItem*) malloc (43);
+
+			while (itemSize >= 0) {
+				itemCount++;
+
+				items = (todoItem*) realloc (items, itemCount*43);
+
+				sscanf (itemBuffer, "%10s:%32[^\n]", &date, &text);
+				strncpy (items[itemCount-1].date, date, 11);
+				strncpy (items[itemCount-1].text, text, 32);
+
+				itemSize = getline (&itemBuffer, &itemBufferSize, fp);
+			}
+
+			free (itemBuffer);
+			itemBuffer = NULL;
+			fclose (fp);
 		}
 
-		free (itemBuffer);
-		itemBuffer = NULL;
-		fclose (fp);
+		struct tm * time_struct;
+		time (&time_raw);
+		time_struct = localtime (&time_raw);
+		strftime (today, 11, "%Y-%m-%d", time_struct);
+
+		for (i = 0; i < itemCount; i++) {
+			if ((strcmp (today, items[i].date)) == 0) {
+				sprintf (system_call, "/home/ian/bin/messages \"%s\"\n", items[i].text);
+				system (system_call);
+				return EXIT_SUCCESS;
+			}
+		}
 	}
-
-	struct tm * time_struct;
-	time (&time_raw);
-	time_struct = localtime (&time_raw);
-	strftime (today, 11, "%Y-%m-%d", time_struct);
-
-	for (i = 0; i < itemCount; i++) {
-		if ((strcmp (today, items[i].date)) == 0) {
-			/*printf ("%s\n", items[i].text);*/
-			sprintf (system_call, "messages \"%s\"\n", items[i].text);
-			system (system_call);
-			return EXIT_SUCCESS;
+	else if (argc > 1) {
+		if ((fp = fopen (file, "a")) == NULL) {
+		}
+		else {
+			/* this is very basic, assumes correct input format
+ 			 * yyyy-mm-dd:text
+ 			 */
+			fprintf (fp, "%s\n", argv[1]);
+			fclose (fp);
 		}
 	}
 
