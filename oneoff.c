@@ -4,7 +4,7 @@
  *
  *    Description:  returns one-off to-do item when the date matches today
  *
- *        Version:  1.0
+ *        Version:  1.2
  *        Created:  2024-10-19 07:22
  *       Compiler:  gcc
  *
@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <unistd.h>
 
 typedef struct todoItem {
 	char text[32];
@@ -76,14 +77,19 @@ int main (int argc, char *argv[]) {
 		}
 	}
 	else if (argc > 1) {
-		if ((fp = fopen (file, "a")) == NULL) {
+		if (strncmp (argv[1], "edit\0", 5) == 0) {
+			execlp ("vim", "vim", file, NULL);
 		}
 		else {
-			/* this is very basic, assumes correct input format
- 			 * yyyy-mm-dd:text
- 			 */
-			fprintf (fp, "%s\n", argv[1]);
-			fclose (fp);
+			if ((fp = fopen (file, "a")) == NULL) {
+			}
+			else {
+				/* this is very basic, assumes correct input format
+ 			 	 * yyyy-mm-dd:text
+ 			 	 */
+				fprintf (fp, "%s\n", argv[1]);
+				fclose (fp);
+			}
 		}
 	}
 
