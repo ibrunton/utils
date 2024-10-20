@@ -40,6 +40,8 @@ int main (int argc, char *argv[]) {
 
 	if (argc == 1) {
 		if ((fp = fopen (file, "r")) == NULL) {
+			fprintf (stderr, "Cannot open file %s\n", file);
+			return EXIT_FAILURE;
 		}
 		else {
 			itemSize = getline (&itemBuffer, &itemBufferSize, fp);
@@ -79,9 +81,12 @@ int main (int argc, char *argv[]) {
 	else if (argc > 1) {
 		if (strncmp (argv[1], "edit\0", 5) == 0) {
 			execlp ("vim", "vim", file, NULL);
+			return EXIT_SUCCESS;
 		}
 		else {
 			if ((fp = fopen (file, "a")) == NULL) {
+				fprintf (stderr, "Cannot open file %s\n", file);
+				return EXIT_FAILURE;
 			}
 			else {
 				/* this is very basic, assumes correct input format
